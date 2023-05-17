@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import {
   signInWithGooglePopup,
-  registerUserInFirestore,
   _signInWithEmailAndPassword,
 } from "../../utils/firebase/firebase.component";
 
@@ -21,8 +20,7 @@ const SignInForm = () => {
   const { email, password } = formFields;
 
   const signInWithGoogle = async () => {
-    let { user } = await signInWithGooglePopup();
-    await registerUserInFirestore(user);
+    await signInWithGooglePopup();
   };
 
   const resetFormFields = () => {
@@ -37,10 +35,8 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      let response = await _signInWithEmailAndPassword(email, password);
-      // await registerUserInFirestore(user);
+      await _signInWithEmailAndPassword(email, password);
       resetFormFields();
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
